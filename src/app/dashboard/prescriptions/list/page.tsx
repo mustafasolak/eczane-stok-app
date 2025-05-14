@@ -44,12 +44,14 @@ interface SaleRecord {
   musteriAdSoyad: string;
   musteriTC: string;
   musteriTelefon: string;
-  satisTarihi: any;
+  satisTarihi: {
+    seconds: number;
+    nanoseconds: number;
+  };
   satisYapan: string;
 }
 
 export default function SalesListPage() {
-  const { user } = useAuth();
   const [sales, setSales] = useState<SaleRecord[]>([]);
   const [filteredSales, setFilteredSales] = useState<SaleRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -110,8 +112,6 @@ export default function SalesListPage() {
     // Zaman bazlı istatistikler
     const now = new Date();
     const oneDay = 24 * 60 * 60 * 1000;
-    const oneWeek = 7 * oneDay;
-    const oneMonth = 30 * oneDay;
 
     // Son 7 gün için günlük satışlar
     const last7Days = Array.from({ length: 7 }, (_, i) => {
@@ -339,11 +339,11 @@ export default function SalesListPage() {
                       <div className="flex items-center">
                         {sale.urunResimUrl && (
                           <div className="flex-shrink-0 h-16 w-16 mr-4">
-                            <img
-                              src={sale.urunResimUrl}
-                              alt={sale.urunAdi}
-                              className="h-16 w-16 object-cover rounded-md"
-                            />
+                            <div
+                              className="h-16 w-16 bg-cover bg-center rounded-md"
+                              style={{ backgroundImage: `url(${sale.urunResimUrl})` }}
+                              aria-label={sale.urunAdi}
+                            ></div>
                           </div>
                         )}
                         <div>

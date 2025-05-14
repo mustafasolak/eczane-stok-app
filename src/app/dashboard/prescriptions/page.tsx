@@ -5,12 +5,26 @@ import { useAuth } from '@/providers/auth-provider';
 import { doc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import Image from 'next/image';
+
+interface ProductData {
+  id: string;
+  name: string;
+  stockCode: string;
+  barcode: string;
+  quantity: number;
+  brand: string;
+  description: string;
+  imageUrl: string;
+  price: number;
+  shelfRow: string;
+  shelfColumn: string;
+}
 
 export default function PrescriptionsPage() {
   const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResult, setSearchResult] = useState<any | null>(null);
+  const [searchResult, setSearchResult] = useState<ProductData | null>(null);
   const [loading, setLoading] = useState(false);
   const [showSaleForm, setShowSaleForm] = useState(false);
   const [searchAttempted, setSearchAttempted] = useState(false);
@@ -210,7 +224,7 @@ export default function PrescriptionsPage() {
         const guncelStok = Math.max(0, (urunData.quantity ?? urunData.stok_miktari ?? 0) - 1);
         
         // Stok miktarını güncelle
-        const updateData: any = {};
+        const updateData: Record<string, number> = {};
         
         // Hem İngilizce hem Türkçe alan adlarını güncelle
         if ('quantity' in urunData) {
@@ -329,15 +343,19 @@ export default function PrescriptionsPage() {
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
                     {searchResult.imageUrl ? (
-                      <img
+                      <Image
                         src={searchResult.imageUrl}
                         alt={searchResult.name}
+                        width={128}
+                        height={128}
                         className="h-32 w-32 object-cover rounded-lg"
                       />
                     ) : (
-                      <img
+                      <Image
                         src="/ilac.png"
                         alt="Varsayılan"
+                        width={128}
+                        height={128}
                         className="h-32 w-32 object-contain rounded-lg"
                       />
                     )}
