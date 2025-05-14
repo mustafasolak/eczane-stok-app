@@ -49,7 +49,9 @@ export default function PrescriptionsPage() {
           brand: data.brand ?? data.urun_markasi ?? '',
           description: data.description ?? data.urun_aciklamasi ?? '',
           imageUrl: data.imageUrl ?? data.urun_resmi_url ?? '',
-          price: data.price ?? data.fiyat ?? 0
+          price: data.price ?? data.fiyat ?? 0,
+          shelfRow: data.shelfRow ?? '1',
+          shelfColumn: data.shelfColumn ?? 'A'
         };
       } else {
         // ID ile bulunamadıysa stok kodu veya barkod ile ara
@@ -74,7 +76,9 @@ export default function PrescriptionsPage() {
             brand: data.brand ?? data.urun_markasi ?? '',
             description: data.description ?? data.urun_aciklamasi ?? '',
             imageUrl: data.imageUrl ?? data.urun_resmi_url ?? '',
-            price: data.price ?? data.fiyat ?? 0
+            price: data.price ?? data.fiyat ?? 0,
+            shelfRow: data.shelfRow ?? '1',
+            shelfColumn: data.shelfColumn ?? 'A'
           };
         } else {
           // Türkçe alan adı ile de deneme
@@ -97,7 +101,9 @@ export default function PrescriptionsPage() {
               brand: data.brand ?? data.urun_markasi ?? '',
               description: data.description ?? data.urun_aciklamasi ?? '',
               imageUrl: data.imageUrl ?? data.urun_resmi_url ?? '',
-              price: data.price ?? data.fiyat ?? 0
+              price: data.price ?? data.fiyat ?? 0,
+              shelfRow: data.shelfRow ?? '1',
+              shelfColumn: data.shelfColumn ?? 'A'
             };
           } else {
             // Barkod ile arama
@@ -120,7 +126,9 @@ export default function PrescriptionsPage() {
                 brand: data.brand ?? data.urun_markasi ?? '',
                 description: data.description ?? data.urun_aciklamasi ?? '',
                 imageUrl: data.imageUrl ?? data.urun_resmi_url ?? '',
-                price: data.price ?? data.fiyat ?? 0
+                price: data.price ?? data.fiyat ?? 0,
+                shelfRow: data.shelfRow ?? '1',
+                shelfColumn: data.shelfColumn ?? 'A'
               };
             } else {
               // Türkçe barkod alanı ile deneme
@@ -143,7 +151,9 @@ export default function PrescriptionsPage() {
                   brand: data.brand ?? data.urun_markasi ?? '',
                   description: data.description ?? data.urun_aciklamasi ?? '',
                   imageUrl: data.imageUrl ?? data.urun_resmi_url ?? '',
-                  price: data.price ?? data.fiyat ?? 0
+                  price: data.price ?? data.fiyat ?? 0,
+                  shelfRow: data.shelfRow ?? '1',
+                  shelfColumn: data.shelfColumn ?? 'A'
                 };
               }
             }
@@ -337,6 +347,16 @@ export default function PrescriptionsPage() {
                     <p className="mt-1 text-sm text-gray-600">Stok Kodu: {searchResult.stockCode}</p>
                     <p className="mt-1 text-sm text-gray-600">Barkod: {searchResult.barcode}</p>
                     <p className="mt-1 text-sm text-gray-600">Marka: {searchResult.brand}</p>
+                    
+                    <div className="mt-2 flex items-center space-x-2">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Raf Konumu: {searchResult.shelfRow}-{searchResult.shelfColumn}
+                      </span>
+                    </div>
                     
                     {searchResult.quantity > 0 ? (
                       <div className="mt-4 flex justify-between items-center">

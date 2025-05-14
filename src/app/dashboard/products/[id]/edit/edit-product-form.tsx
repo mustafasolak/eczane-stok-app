@@ -17,6 +17,8 @@ const productSchema = z.object({
   quantity: z.number().min(0, 'Stok miktarı 0 veya daha büyük olmalıdır'),
   brand: z.string().min(1, 'Marka zorunludur'),
   description: z.string().optional(),
+  shelfRow: z.string().regex(/^[0-9]+$/, 'Satır sadece rakamlardan oluşmalıdır').optional(),
+  shelfColumn: z.string().regex(/^[A-Za-z]+$/, 'Sütun sadece harflerden oluşmalıdır').optional(),
   image: z.any().optional(),
 });
 
@@ -36,6 +38,8 @@ export default function EditProductForm({ productId }: EditProductFormProps) {
     quantity: 0,
     brand: '',
     description: '',
+    shelfRow: '',
+    shelfColumn: '',
     image: null as File | null,
   });
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
@@ -56,9 +60,13 @@ export default function EditProductForm({ productId }: EditProductFormProps) {
             quantity: data.quantity ?? data.stok_miktari ?? 0,
             brand: data.brand ?? data.urun_markasi ?? '',
             description: data.description ?? data.urun_aciklamasi ?? '',
+            shelfRow: data.shelfRow ?? '',
+            shelfColumn: data.shelfColumn ?? '',
             image: null,
           });
-          setCurrentImageUrl(data.imageUrl ?? data.urun_resmi_url ?? null);
+          const imageUrl = data.imageUrl ?? data.urun_resmi_url ?? null;
+          setCurrentImageUrl(imageUrl);
+          setImagePreview(imageUrl);
         } else {
           setError('Ürün bulunamadı');
         }
@@ -120,6 +128,8 @@ export default function EditProductForm({ productId }: EditProductFormProps) {
         quantity: validatedData.quantity,
         brand: validatedData.brand,
         description: validatedData.description,
+        shelfRow: validatedData.shelfRow,
+        shelfColumn: validatedData.shelfColumn,
         imageUrl: imageUrl,
         updatedAt: new Date(),
       });
@@ -286,12 +296,42 @@ export default function EditProductForm({ productId }: EditProductFormProps) {
                   </label>
                   <input
                     type="text"
-                    name="brand"
                     id="brand"
+                    name="brand"
                     value={formData.brand}
                     onChange={handleChange}
+                    required
                     className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    placeholder="Marka adını giriniz"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="shelfRow" className="block text-sm font-medium text-gray-700">
+                    Raf Satırı
+                  </label>
+                  <input
+                    type="text"
+                    id="shelfRow"
+                    name="shelfRow"
+                    value={formData.shelfRow}
+                    onChange={handleChange}
+                    placeholder="Örn: 1,2,3 gibi bir sayı"
+                    className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="shelfColumn" className="block text-sm font-medium text-gray-700">
+                    Raf Sütunu
+                  </label>
+                  <input
+                    type="text"
+                    id="shelfColumn"
+                    name="shelfColumn"
+                    value={formData.shelfColumn}
+                    onChange={handleChange}
+                    placeholder="Örn: A,B,C gibi bir harf"
+                    className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
                 </div>
 
@@ -312,8 +352,11 @@ export default function EditProductForm({ productId }: EditProductFormProps) {
                       <img
                         src={imagePreview}
                         alt="Önizleme"
-                        className="h-20 w-20 object-cover rounded-md"
+                        className="h-40 w-40 object-cover rounded-md"
                       />
+                      <p className="mt-1 text-sm text-gray-500">
+                        {formData.image ? 'Yeni seçilen resim' : 'Mevcut resim'}
+                      </p>
                     </div>
                   )}
                 </div>

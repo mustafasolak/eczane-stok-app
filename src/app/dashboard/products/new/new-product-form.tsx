@@ -18,6 +18,8 @@ const productSchema = z.object({
   stok_miktari: z.number().min(0, 'Stok miktarı 0 veya daha büyük olmalıdır'),
   urun_markasi: z.string().min(1, 'Ürün markası gereklidir'),
   urun_aciklamasi: z.string().min(1, 'Ürün açıklaması gereklidir'),
+  raf_satir: z.string().regex(/^[0-9]+$/, 'Satır sadece rakamlardan oluşmalıdır').optional(),
+  raf_sutun: z.string().regex(/^[A-Za-z]+$/, 'Sütun sadece harflerden oluşmalıdır').optional(),
   barkod_kodu: z.string().optional(),
 });
 
@@ -45,6 +47,8 @@ function generateDefaultFormData() {
     urun_markasi: `Marka ${randomDigits(3)}`,
     urun_aciklamasi: `Otomatik açıklama ${randomDigits(5)}`,
     barkod_kodu: randomDigits(13),
+    raf_satir: '1', // Varsayılan raf satırı
+    raf_sutun: 'A', // Varsayılan raf sütunu
     image: null as File | null,
   };
 }
@@ -129,6 +133,8 @@ export default function NewProductForm() {
         urun_resmi_url,
         createdAt: new Date(),
         updatedAt: new Date(),
+        shelfRow: validatedData.raf_satir || '1',
+        shelfColumn: validatedData.raf_sutun || 'A',
       };
 
       await addDoc(collection(db, 'urunler'), productData);
@@ -231,6 +237,36 @@ export default function NewProductForm() {
                     onChange={handleChange}
                     className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     placeholder="Marka adını giriniz"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="raf_satir" className="block text-sm font-medium text-gray-700">
+                    Raf Satırı
+                  </label>
+                  <input
+                    type="text"
+                    name="raf_satir"
+                    id="raf_satir"
+                    value={formData.raf_satir}
+                    onChange={handleChange}
+                    className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="Raf satırını giriniz"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="raf_sutun" className="block text-sm font-medium text-gray-700">
+                    Raf Sütunu
+                  </label>
+                  <input
+                    type="text"
+                    name="raf_sutun"
+                    id="raf_sutun"
+                    value={formData.raf_sutun}
+                    onChange={handleChange}
+                    className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="Raf sütununu giriniz"
                   />
                 </div>
 

@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Eczane Stok Takip Uygulaması
 
-## Getting Started
+Bu uygulama, eczanelerin stok takibini kolaylaştırmak için geliştirilmiş bir Next.js projesidir.
 
-First, run the development server:
+## Özellikler
+
+- İlaç stok takibi
+- Son kullanma tarihi yaklaşan ilaçların tespiti
+- Stok giriş-çıkış işlemleri
+- Raporlama araçları
+
+## Başlarken
+
+Geliştirme sunucusunu başlatmak için:
 
 ```bash
 npm run dev
-# or
+# veya
 yarn dev
-# or
+# veya
 pnpm dev
-# or
+# veya
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açarak sonucu görebilirsiniz.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Teknolojiler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js](https://nextjs.org)
+- TypeScript
+- Tailwind CSS
 
-## Learn More
+## Kurulum
 
-To learn more about Next.js, take a look at the following resources:
+1. Repoyu klonlayın:
+```bash
+git clone https://github.com/mustafasolak/eczane-stok-app.git
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Bağımlılıkları yükleyin:
+```bash
+cd eczane-stok-app
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Geliştirme sunucusunu başlatın:
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+## Katkıda Bulunma
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Katkılarınızı bekliyoruz! Lütfen bir issue açın veya pull request gönderin.

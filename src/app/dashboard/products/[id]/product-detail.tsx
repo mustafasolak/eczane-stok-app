@@ -17,6 +17,8 @@ interface Product {
   brand: string;
   description?: string;
   imageUrl?: string;
+  shelfRow?: string;
+  shelfColumn?: string;
   createdAt?: {
     seconds: number;
     nanoseconds: number;
@@ -59,6 +61,8 @@ export default function ProductDetail({ params }: ProductDetailProps) {
             brand: data.brand ?? data.urun_markasi ?? '',
             description: data.description ?? data.urun_aciklamasi ?? '',
             imageUrl: data.imageUrl ?? data.urun_resmi_url ?? '',
+            shelfRow: data.shelfRow ?? '',
+            shelfColumn: data.shelfColumn ?? '',
             createdAt: data.createdAt,
             updatedAt: data.updatedAt,
             createdBy: data.createdBy ?? '',
@@ -196,6 +200,12 @@ export default function ProductDetail({ params }: ProductDetailProps) {
                   <div>
                     <dt className="text-sm font-medium text-gray-500">Marka</dt>
                     <dd className="mt-1 text-sm text-gray-900">{product.brand}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-medium text-gray-500">Raf Konumu</dt>
+                    <dd className="mt-1 text-sm text-gray-900">
+                      Satır: {product.shelfRow || '1'}, Sütun: {product.shelfColumn || 'A'}
+                    </dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-gray-500">Açıklama</dt>
