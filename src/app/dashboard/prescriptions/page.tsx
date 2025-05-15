@@ -343,19 +343,15 @@ export default function PrescriptionsPage() {
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
                     {searchResult.imageUrl ? (
-                      <Image
+                      <img
                         src={searchResult.imageUrl}
                         alt={searchResult.name}
-                        width={128}
-                        height={128}
                         className="h-32 w-32 object-cover rounded-lg"
                       />
                     ) : (
-                      <Image
+                      <img
                         src="/ilac.png"
                         alt="Varsayılan"
-                        width={128}
-                        height={128}
                         className="h-32 w-32 object-contain rounded-lg"
                       />
                     )}
